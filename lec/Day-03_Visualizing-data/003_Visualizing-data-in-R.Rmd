@@ -1,0 +1,420 @@
+---
+title: "Visualizing health data in R and RStudio"
+author: "Instructor: Tomer Altman"
+date: "Sept 3, 2025"
+output: slidy_presentation
+#output: beamer_presentation
+#output: pdf_document
+---
+
+### Learning objectives for today
+
+1. To put to use the `dplyr` commands from last lecture
+2. To make beautiful plots using the `ggplot2` package
+
+### Readings
+
+* Online resource: [Creating a `ggplot`](https://r4ds.hadley.nz/data-visualize.html)
+
+### Life expectancy in the United States by race and gender, 1969-2013 
+
+These data are partial results from a study that Dr. Corinne Riddell did on the difference in life 
+expectancy between Black and White men and women in the United 
+States over time. 
+
+A subset of the results have been stored in the datahub folder for today's lecture as a comma separated value (CSV) file.
+
+Do you remember which function to use to import CSV data into R?
+
+### `readr`'s `read_csv()` to import these data
+
+```{r import-csv-data}
+library(readr)
+le_data <- read_csv("./data/Life-expectancy-by-state-long.csv")
+```
+
+### Four functions to get to know your dataset
+
+Function 1
+```{r first-lines}
+head(le_data)
+```
+
+### Four functions to get to know your dataset
+
+Function 2
+```{r dimensions}
+dim(le_data)
+```
+
+### Four functions to get to know your dataset
+
+Function 3
+```{r names}
+names(le_data)
+```
+
+### Four functions to get to know your dataset
+
+Function 4
+```{r structure}
+str(le_data)
+```
+
+### A new useful function: View()
+
+```{r, eval=F}
+View(le_data)
+```
+
+`View()` opens the data viewer pane in RStudio. It does not print anything in the
+data console.
+
+### Life expectancy for White men in California
+
+Make a scatter plot of the life expectancy for White men in California
+over time.
+
+Since the dataset contains 39 states across two genders and two races, first use
+a function to subset the data to contain only White men in California.
+
+Which function from last lecture do we need?
+
+* `mutate()`, `select()`, `filter()`, `rename()`, or `arrange()`?
+
+### Check your understanding!
+
+
+
+### `dplyr`'s `filter()` to select a subset of rows
+
+```{r wh-cali-dataset}
+library(dplyr)
+wm_cali <- le_data %>% filter(state == "California", 
+                              sex == "Male", 
+                              race == "white")
+
+#this is equivalent:
+wm_cali <- le_data %>% filter(state == "California" & sex == "Male" & race == "white")
+```
+
+### First step to building a `ggplot()`: set up the canvas
+
+- The second line of code below specifies the `data` set and what goes on the `x` and `y` axes
+
+```{r ggplot-canvas, out.width = "80%", fig.align='center'}
+library(ggplot2)
+ggplot(data = wm_cali, aes(x = year, y = LE))
+```
+
+### Second step to building a `ggplot()`: tell `ggplot` how to plot the data
+
+```{r ggplot-geom_point, out.width = "60%", fig.align='center'}
+ggplot(data = wm_cali, aes(x = year, y = LE)) + geom_point()
+```
+
+- `geom_point()` tells ggplot to use points to plot these data
+
+### `labs()` to add a title, a caption, and modify x and y axes titles
+
+```{r ggplot-change-titles, out.width = "60%", fig.align='center'}
+ggplot(data = wm_cali, aes(x = year, y = LE)) + geom_point() +
+  labs(title = "Life expectancy in white men in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### `col` controls the color of geom_point()
+
+```{r ggplot-change-col, out.width = "60%", fig.align='center'}
+ggplot(data = wm_cali, aes(x = year, y = LE)) + geom_point(col = "blue") +
+  labs(title = "Life expectancy in white men in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### `size` controls the size of geom_point()
+
+```{r ggplot-change-col-size, out.width = "60%", fig.align='center'}
+ggplot(data = wm_cali, aes(x = year, y = LE)) + geom_point(col = "blue", size = 4) +
+  labs(title = "Life expectancy in white men in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### Line plot rather than scatter plot
+
+What if we wanted to make these data into a line plot instead. What part of the 
+code should change?
+
+```{r ggplot-previous-code, out.width = "60%", fig.align='center'}
+ggplot(data = wm_cali, aes(x = year, y = LE)) + 
+  geom_point(col = "blue", size = 4) +
+  labs(title = "Life expectancy in white men in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### `geom_line()` to make a line plot
+
+```{r ggplot-geom_line, out.width = "60%", fig.align='center'}
+ggplot(data = wm_cali, aes(x = year, y = LE)) + geom_line(col = "blue") +
+  labs(title = "Life expectancy in white males in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### Life expectancy for White and Black men in California
+
+What do we need to change to make a separate line for both Black and White men?
+
+### First, update the `filter()`
+
+```{r create-new-dataset}
+wbm_cali <- le_data %>% filter(state == "California",
+                               sex == "Male")
+```
+
+### Look at the previous code and output first
+
+```{r ggplot-geom_line-dup, out.width = "60%", fig.align='center'}
+ggplot(data = wm_cali, aes(x = year, y = LE)) + geom_line(col = "blue") +
+  labs(title = "Life expectancy in white men in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### And change it to **link** color to race
+
+```{r ggplot-geom_line-aes, out.width = "60%", fig.align='center'}
+ggplot(data = wbm_cali, aes(x = year, y = LE)) + geom_line(aes(col = race)) +
+  labs(title = "Life expectancy in black and white men in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### Always use the aes() function to link a plot feature to a variable in your data frame
+
+The operative word is *link*. Whenever you want to link something about how 
+the plot looks to a variable in the data frame, you need to *link* these items
+inside the `aes()` function:
+
+```{r ggplot-link-using-aes, out.width = "60%", fig.align='center'}
+ggplot(data = wbm_cali, aes(x = year, y = LE)) + geom_line(aes(col = race)) +
+  labs(title = "Life expectancy in Black and White men in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### The `aes()` function
+
+* What else was added to the plot when you used the `aes()` function?
+
+### The `aes()` function
+
+* What else was added to the plot when you used the `aes()` function?
+    * A legend was added showing the link between the line color and the data 
+    frame's race variable
+
+### What if we also wanted to look at women?
+
+### What if we also wanted to look at women?
+
+```{r cali-dataset, out.width = "60%", fig.align='center'}
+cali_data <- le_data %>% filter(state == "California")
+```
+
+### What is wrong with this plot?
+
+```{r ggplot-whoopsies, out.width = "60%", fig.align='center'}
+ggplot(data = cali_data, aes(x = year, y = LE)) + geom_line(aes(col = race)) +
+  labs(title = "Life expectancy in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### Use `lty()` to **link** line type to sex
+
+```{r ggplot-california, out.width = "60%", fig.align='center'}
+ggplot(data = cali_data, aes(x = year, y = LE)) + geom_line(aes(col = race, lty = sex)) +
+  labs(title = "Life expectancy in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)")
+```
+
+### Use `facet_wrap()` to make separate plots for a specified variable
+
+```{r ggplot-california-facet, out.width = "60%", fig.align='center'}
+ggplot(data = cali_data, aes(x = year, y = LE)) + 
+  geom_line(aes(col = race, lty = sex)) +
+  labs(title = "Life expectancy in California, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)") +
+  facet_wrap(~ sex)
+```
+
+### Compare two states
+
+How do we update the `filter` to include data from California and New York?
+
+### Compare two states
+
+```{r two-states, out.width = "60%", fig.align='center'}
+updated_data <- le_data %>% filter(state %in% c("California", "New York"))
+```
+
+### Let's write the code together
+
+```{r, out.width = "60%", fig.align='center'}
+#to fill in during class
+```
+
+### Let's write the code together
+
+```{r ggplot-facet_wrap, out.width = "60%", fig.align='center'}
+ggplot(data = updated_data, aes(x = year, y = LE)) + 
+  geom_line(aes(col = race, lty = sex)) +
+  labs(title = "Life expectancy in California and New York, 1969-2013",
+       y = "Life expectancy", 
+       x = "Year", 
+       caption = "Data from Riddell et al. (2018)") +
+  facet_grid(state ~ sex)
+```
+
+### Check your understanding!
+
+### So far
+
+- `geom_point()` to make scatter plots
+- `geom_line()` to make line plots
+- `col = "blue"`, `size = 2`, `lty = 2`, to change color, size and line type of the `geom`
+- `aes(col = race)` to *link* color to race
+- `aes(lty = sex)` to *link* line type to sex
+- `facet_wrap(~ var1)` to make separate plots for different levels of one variable
+- `facet_grid(var1 ~ var2)` to make separate plots for combinations of levels of two variables
+
+### What if we wanted to make a histogram...
+
+...of life expectancy of white males in 2013?
+
+Before you code, try and visualize what the histogram will show
+
+- What is on the x axis? What is on the y axis? 
+
+### Update the `filter`
+
+```{r filter-2013-men-white}
+wm_data <- le_data %>% filter(year == 2013, sex == "Male", race == "white")
+```
+
+### `geom_histogram()` to make histograms
+
+```{r ggplot_geom_histogram, out.width = "60%", fig.align='center'}
+ggplot(dat = wm_data, aes(x = LE)) + geom_histogram()
+```
+
+### Use `fill` to change the *fill* of the histogram and `binwidth` to specify the bin's width 
+
+```{r ggplot_geom_histogram-bin-width, out.width = "60%", fig.align='center'}
+wm_data <- le_data %>% filter(year == 2013, sex == "Male", race == "white")
+
+ggplot(dat = wm_data, aes(x = LE)) + 
+  geom_histogram(binwidth = 1, col = "white", fill = "forest green") 
+```
+
+### Apply some of our new skills
+
+```{r ggplot_geom_histogram-more, out.width = "60%", fig.align='center'}
+data_2013 <- le_data %>% filter(year == 2013)
+
+ggplot(dat = data_2013, aes(x = LE)) + 
+  geom_histogram(binwidth = 1, col = "white", aes(fill = sex)) + 
+  facet_grid(race ~ sex)
+```
+
+### Recap: What functions did we learn?
+
+1. `ggplot()`
+    - `geom_point()`
+    - `geom_line()`
+    - `geom_histogram()`
+    - `aes()` to link aesthetics to variables in our data frame
+    - `facet_wrap(~ var1)`, `facet_grid(var1 ~ var2)`
+    - `labs(title = "Main", y = "y axis", x = "x axis", caption = "below plot")`
+
+### Recap: What arguments were useful?
+
+2. `ggplot()`
+    - `col`
+    - `size`
+    - `lty`
+    
+### A common `dplyr` mistake to avoid!
+
+With dplyr, the pipe operator goes at the end of the line, not the beginning:
+
+Right way:
+
+```{r}
+data_2013 <- le_data %>% 
+  filter(year == 2013)
+
+#or
+
+data_2013 <- le_data %>% filter(year == 2013)
+```
+
+Wrong way:
+
+```{r, eval=F}
+data_2013 <- le_data 
+%>% filter(year == 2013)
+```
+
+### A common `ggplot` mistake to avoid!
+
+With ggplot2, the "+"" operator goes at the end of the line, not the beginning:
+
+Right way: 
+
+```{r, eval = F}
+ggplot(dat = data_2013, aes(x = LE)) + 
+  geom_histogram(binwidth = 1, col = "white", aes(fill = sex)) + 
+  facet_grid(race ~ sex)
+```
+
+Wrong way: 
+
+```{r, eval = F}
+ggplot(dat = data_2013, aes(x = LE))  
+  + geom_histogram(binwidth = 1, col = "white", aes(fill = sex)) 
+  + facet_grid(race ~ sex)
+```
+
+### How to get help with code
+
+- Ask questions during lab section, GSI & instructor office hours, or on Ed discussion forum. Use the appropriate thread!
+- Develop your online search skills. For example if you have a `ggplot2` question, begin your google search with "r ggplot" and then describe your issues, e.g., "r ggplot how do I make separate lines by a second variable". 
+- The most common links that will appear are:
+    - https://stackoverflow.com: Crowd-sourced answers, mostly focused on software engineering, that have been upvoted. The top answer is often the best one.
+    - https://stats.stackexchange.com: Cross Validated. Like Stack Overflow, but focused on statistics and data science
+    - https://ggplot2.tidyverse.org/: The official ggplot2 webpage is very helpful
+    - https://forum.posit.co/: The Posit (formerly RStudio) community forum
+    - https://rpubs.com/: Web pages made by R users that often contain helpful tutorials
+    
+### We only skimmed the surface!
+
+- Here is some extra material for those of you who love data visualization. This material won't be tested.
+    - [RStudio ggplot2 cheatsheet](https://rstudio.github.io/cheatsheets/html/data-visualization.html)
+    - [Kieran Healy's data visualization book](https://www.amazon.com/gp/product/0691181624/)
