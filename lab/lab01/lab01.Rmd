@@ -9,7 +9,7 @@ library(testthat)
 ```
 
 ### Instructions 
-* Due date: Friday, August 28th. See the course schedule for the submission time and grace period.
+* Due date: 11:59 am, Saturday, August 29th. See the course schedule for the submission time and grace period.
 * Late penalty: 50% late penalty if submitted within 24 hours of due date, no marks for assignments submitted thereafter.
 * This assignment is graded on **correct completion**, all or nothing. You must pass all public tests and submit the assignment for credit.
 * Submission process: Follow the submission instructions on the final page. Make sure you do not remove any `\newpage` tags or rename this file, as this will break the submission.
