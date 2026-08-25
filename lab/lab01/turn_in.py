@@ -11,7 +11,7 @@ from os.path import isfile, join
 ASSIGNMENT_RMD_PATH = "lab01.Rmd"
 COURSE_ID = 1354579
 # Add the Fall 2026 Lab 1 assignment ID after creating the assignment in Gradescope.
-PROGRAMMING_ASSIGNMENT_ID = None
+PROGRAMMING_ASSIGNMENT_ID = 8481638
 
 # Don't change these
 PDF_PATH = ASSIGNMENT_RMD_PATH.replace('.Rmd', '.pdf')
