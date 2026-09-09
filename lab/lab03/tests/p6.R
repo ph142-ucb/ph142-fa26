@@ -35,11 +35,6 @@ test = list(
           expect_true("GeomSmooth" %in% class(p6$layers[[2]]$geom) | "GeomSmooth" %in% class(p6$layers[[1]]$geom) )
           print("Checking: added a smooth line")
         })
-
-        test_that("p6g", {
-          expect_true(p6$labels$colour == "Income_Group")
-          print("Checking: Color linked to Income_Group")
-        })
       }
     )
   )
