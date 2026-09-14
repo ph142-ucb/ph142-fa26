@@ -10,7 +10,7 @@ output: pdf_document
 
 ```{r setup, include = FALSE}
 # Don't change these lines, just run them!
-source("setup/hw03.RAGS.R")
+knitr::opts_chunk$set(echo = TRUE)
 
 ```
 
@@ -72,15 +72,10 @@ and make a conclusion to help answer the problem statement.
 insure_data <- "<<<<YOUR CODE HERE>>>>"
 
 # BEGIN SOLUTION
-insure_data <- read_csv("insurance.csv")
+insure_data <- read_csv("data/insurance.csv")
 
 # END SOLUTION
-# ------- REMINDER -------
-# The checks on this homework are only provided as sanity checks.
-# They do not guarantee correctness.
-# ------------------------
 
-check_problem1()
 ```
 
 \newpage
@@ -105,7 +100,6 @@ p2 <- nrow(insure_data)
 
 # END SOLUTION
 
-check_problem2()
 ```
 
 **3. [1 point] What are the nominal variables in the dataset? Assign the names of these variables to a vector of strings, p3.**
@@ -116,7 +110,6 @@ p3 <- "<<<<YOUR CODE HERE>>>>"
 p3 <- c("sex", "smoker", "region")
 # END SOLUTION
 
-check_problem3()
 ```
 
 **4. [1 point] How many ordinal variables are in the dataset? Assign the number of ordinal variables to p4.**
@@ -127,7 +120,6 @@ p4 <- "<<<<YOUR CODE HERE>>>>"
 p4 <- 0
 # END SOLUTION
 
-check_problem4()
 ```
 
 **5. [1 point] Are there continuous variables in the dataset? Assign the names of these variables to a vector of strings, p5.**
@@ -139,7 +131,6 @@ p5 <- c("bmi", "charges", "age")
 p5 <- c("bmi", "charges") # also accepted
 # END SOLUTION
 
-check_problem5()
 ```
 
 **6. [1 point] What are the discrete variables in the dataset? Assign the names of these variables to a vector of strings, p6.**
@@ -151,7 +142,6 @@ p6 <- c("children")
 p6 <- c("children", "age") # also accepted
 # END SOLUTION
 
-check_problem6()
 ```
 
 \newpage
@@ -192,8 +182,6 @@ BMI.
 p8 <- "ordinal"
 
 # END SOLUTION
-# This only checks that you've selected an answer, not its correctness.
-check_problem8()
 ```
 
 \newpage
@@ -209,8 +197,6 @@ check_problem8()
 p9 <- "Smokers of normal BMI"
 
 # END SOLUTION
-# This only checks that you've selected an answer, not its correctness.
-check_problem9()
 ```
 
 
@@ -224,7 +210,6 @@ insure_subset <- insure_data %>% filter(smoker == "yes" & bmi_cat == "Normal")
 
 # END SOLUTION
 
-check_problem10()
 ```
 
 \newpage
@@ -243,7 +228,6 @@ p11
 
 # END SOLUTION
 
-check_problem11()
 ```
 
 \newpage
@@ -260,7 +244,6 @@ tidy(insure_model)
 
 # END SOLUTION
 
-check_problem12()
 
 ```
 
@@ -311,7 +294,6 @@ p14
 
 # END SOLUTION
 
-check_problem14()
 ```
 
 \newpage
@@ -359,7 +341,6 @@ tidy(insure_better_model)
 
 # END SOLUTION
 
-check_problem17()
 
 ```
 
@@ -381,7 +362,6 @@ p18
 
 # END SOLUTION
 
-check_problem18()
 ```
 
 \newpage
@@ -396,7 +376,6 @@ insure_model_r2 <- glance(insure_model) %>% pull(r.squared)
 
 # END SOLUTION
 
-check_problem19()
 ```
 
 **20. [1 point] Calculate the r-squared value for `insure_better_model` using a function learned in class. Assign this value to insure_better_model_r2.**
@@ -409,7 +388,6 @@ insure_better_model_r2 <- glance(insure_better_model) %>% pull(r.squared)
 
 # END SOLUTION
 
-check_problem20()
 ```
 
 \newpage
@@ -424,7 +402,6 @@ p21 <- insure_subset %>% summarize(corr = cor(age, charges), corr_sq = corr^2)
 
 # END SOLUTION
 
-check_problem21()
 ```
 
 **22. [2 points] Calculate the correlation between `age` and `charges` using the smaller dataset `insure_smaller_subset`. Also calculate correlation squared. You should use `summarize()` and name the two new columns `corr` and `corr_sq`. What do you notice about the relationship between the correlation and r-squared values that you calculated earlier?**
@@ -437,7 +414,6 @@ p22 <- insure_smaller_subset %>% summarize(corr = cor(age, charges), corr_sq = c
 
 # END SOLUTION
 
-check_problem22()
 ```
 
 \newpage
@@ -456,7 +432,6 @@ insure_smokers <- insure_data %>% filter(smoker == "yes")
 
 # END SOLUTION
 
-check_problem23()
 ```
 
 \newpage
@@ -475,7 +450,6 @@ p24
 
 # END SOLUTION
 
-check_problem24()
 ```
 
 **Is there something out of order with your plot you just made? The issue is that the plot is automatically displayed by listing the BMI categories alphabetically. Uncomment and run the following code chunk to assign an ordering to the values of `bmi_cat`.**: 
@@ -501,7 +475,6 @@ p25
 
 # END SOLUTION
 
-check_problem25()
 ```
 
 \newpage
@@ -536,7 +509,6 @@ tidy(obese_mod)
 
 # END SOLUTION
 
-check_problem26()
 ```
 
 \newpage
@@ -552,7 +524,6 @@ p27 <- 10656.1 + 246.1 * 20 # = $15578.1
 
 # END SOLUTION
 
-check_problem27()
 ```
 
 **28. [1 point] ...among overweight BMI group:**
@@ -564,7 +535,6 @@ p28 <- 12399.7 + 264.2 * 20 # = $17683.7
 
 # END SOLUTION
 
-check_problem28()
 ```
 
 **29. [1 point] ...among obese BMI group:**
@@ -576,7 +546,6 @@ p29 <- 30558.1 + 281.2 * 20 # = $36182.1
 
 # END SOLUTION
 
-check_problem29()
 ```
 
 \newpage
@@ -590,15 +559,3 @@ check_problem29()
 There was a positive association between age and medical charges for normal, overweight, and obese individuals. The relationship was of similar magnitude for each BMI group, though the slope increased in magnitude for overweight and obese individuals, implying that a steeper relationship for overweight individuals, and even steeper for obese individuals vs. normal BMI individuals. For a given age, obese individuals had much higher charges than overweight and normal weight individuals.
 
 # END SOLUTION
-
-
-\newpage
-
-### Check your score
-
-Click on the middle icon on the top right of this code chunk (with the downwards gray arrow and green bar) to run all your code in order. Then, run this chunk to check your score.
-```{r check-total-score}
-# Just run this chunk.
-total_score()
-```
-
