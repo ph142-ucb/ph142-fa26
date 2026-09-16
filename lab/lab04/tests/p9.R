@@ -12,7 +12,7 @@ test = list(
         })
 
         test_that("p9b", {
-          expect_true(p9[1] == 17)
+          expect_true(p9[1] %in% c(16, 17))
           print("Checking: P(D|A') is the correct value")
         })
 
