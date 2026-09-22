@@ -12,7 +12,7 @@ library(testthat)
 ```
 
 ### Instructions 
-* Due date: Friday, February 27th at 9:59pm PST with 2 hour grace period.
+* Due date: Saturday, September 26th at 11:59am PST.
 * This assignment is graded on **correct completion**, all or nothing. You must pass all public tests and submit the assignment for credit.
 * Submission process: Follow the submission instructions on the final page. Make sure you do not remove any `\newpage` tags or rename this file, as this will break the submission. 
 
