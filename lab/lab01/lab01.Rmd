@@ -69,7 +69,7 @@ We will often provide code chunks in the R markdown files: these are little sect
 - **Exercise 4:** In the code chunk below, use the assignment operator (`<-`) to store your answer in an object called `monthly_wage`. When assigning variables, the stuff on the right-hand side of the arrow `<-` is evaluated first, and then assigned to the object specified by the variable name on the left of the arrow.
 
 ```{r monthly-wage}
-monthly_wage <- "YOUR CODE HERE"
+monthly_wage <- 20 * 15 * 4 * 0.8
 ```
 
 You can also save a series of numbers in an object.  For example: `heights <- c(5,6,2,9,6)` will save a set of values in the object "heights". The `c()` tells R to "combine" the numbers into a list, known in R as a **vector**.
@@ -172,7 +172,7 @@ p1 <- NULL # YOUR CODE HERE (EXAMPLE ONLY)
 As you work on the problem, replace the text `NULL # YOUR CODE HERE` with your solution to the problem. Running `. = ottr::check("tests/p1.R")` will then tell you if you're right or wrong, and sometimes provide helpful hints. Let's try.
 
 ```{r tags=c()}
-p1 <- NULL # YOUR CODE HERE
+p1 <- 5
 ```
 
 ```{r}
@@ -183,7 +183,7 @@ When you enter the correct answer, `. = ottr::check("tests/p1.R")` should tell y
 
 ```{r five-wrong, tags=c()}
 # This is a WRONG NUMERIC answer. Change it back to 5 afterwards to compare the autograder response!
-p2 <- NULL # FILL IN WITH INTEGER
+p2 <- 5
 ```
 
 ```{r}
@@ -196,7 +196,7 @@ You'll also run into problems that will ask you to explain your answer in a coup
 
 I am looking forward to...
 
-_Type your answer here, replacing this text._
+I am looking forward to learning how to use R to explore data, answer real-world questions, and build analyses I can trust.
 
 Now, at the end of the assignment, you should go back through and run each code chunk to be sure you passed all of your tests. On this assignment, that only means that `p1` and `p2` should equal 5. Go back and change your answers if they are not! One way to check that works well is to click the grey downward facing arrow in the right corner of the code chunk. This will run all previous code chunks so all of your answers are up to date.
 
