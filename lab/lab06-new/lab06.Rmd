@@ -13,7 +13,7 @@ library(rlang)
 ```
 
 ### Instructions
-* Due date: Friday, March 6th at 9:59pm with a 2 hour grace period.
+* Due date: Saturday, Oct 10th at 11:59am.
 * This assignment is graded on **correct completion**, all or nothing. You must pass all public tests and submit the assignment for credit.
 * Submission process: Follow the submission instructions on the final page. Make sure you do not remove any `\newpage` tags or rename this file, as this will break the submission. 
 
@@ -340,7 +340,7 @@ Once you have checked these items, you can proceed to submit your assignment.
 1. Click on the **Terminal** tab in the pane below.
 2. Copy-paste the following line of code into the terminal and press enter.
 
-cd; cd ph142-sp26/lab/lab06; python3 turn_in.py
+cd; cd ph142-fa26/lab/lab06-new; python3 turn_in.py
 
 3. Follow the prompts to enter your Gradescope username and password. When entering your password, you won't see anything come up on the screen--don't worry! This is just for security purposes--just keep typing and hit enter.
 4. If the submission is successful, you should see "Submission successful!" appear as output.
