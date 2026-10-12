@@ -12,7 +12,7 @@ library(testthat)
 ```
 
 ### Instructions 
-* Due date: Friday, March 13th at 9:59pm PDT with a 2 hour grace period for issues communicated by email.
+* Due date: Saturday, Oct 17th at 11:59 am PDT.
 * Don't delete or add any `\newpage` tags.
 
 Helpful hints:
