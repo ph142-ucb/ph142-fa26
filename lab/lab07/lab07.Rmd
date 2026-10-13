@@ -53,7 +53,7 @@ library(ggplot2)
 library(readr)
 
 #### YOUR CODE GOES HERE ####
-
+alameda_pop=read_csv("data/L07_Alameda.csv")
 ```
 
 **1. [1 point] Calculate the true (population) mean and standard deviation of the `height` variable in the Alameda population dataset. To do this, use a `dplyr` function to make a dataframe called `height_mean_sd` with the first column called `mean_height` and the second column called `sd_height`.**
