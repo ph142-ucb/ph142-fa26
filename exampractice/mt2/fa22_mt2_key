@@ -1,0 +1,49 @@
+Fall 2022 Midterm 2: Answer Key
+
+1a. sample space
+1b. event
+1c. probability model
+1d. False. If A and B are independent, P(A|B) = P(A) and P(B|A) = P(B), which aren’t equal in general.
+
+2. C. Number of people taller than 70 inches in a random sample of 15 people
+
+3. D. standard deviation, mean
+
+4a. on average gets closer to
+4b. smaller than
+
+5. C. pnorm(q = 70, mean = 60, sd = 10, lower.tail = F)
+
+6. A, C, D
+
+7. False. A large p-value means we fail to reject the null hypothesis. It does not mean the null is correct.
+
+8. a = X2, b = X4, c = X3, d = X1
+
+9a. (1 point each)
+
+A. P(dedicated) = 0.90 = 90.00%
+B. 1 − 0.9^5 = 1 − 0.5905 = 0.4095 = 40.95%
+C. 0.9 × C(20,1) × (0.2) × (0.8)^19 = 0.0519 = 5.19%
+D. 0.1 × C(10,1) × (0.2) × (0.8)^9 = 0.0268 = 2.68%
+
+9b. P(lazy | 1 person) = P(lazy and 1 person) / P(1 person) = 0.0268 / (0.0519 + 0.0268) = 0.0268 / 0.0787 = 0.3410 = 34.10%
+Give points for 9b if the 9a values were wrong but the method was correct.
+
+10a. Sensitivity = P(I = + | F = yes), read from the tree diagram.
+
+10b. P(I = −) = P(I = −, F = no) + P(I = −, F = yes), read from the tree diagram.
+
+11a. Approximately Normal, by the Central Limit Theorem.
+
+11b. QQ Plot and the 68-95-99 rule
+
+12a. H0: μ = 4 minutes; HA: μ > 4 minutes
+
+12b. B
+
+12c. Yes. The null value of 4 minutes falls outside the 95% CI (6.5, 7.0), so we reject H0.
+
+12d. A type I error means rejecting a null hypothesis that is actually true. Here, the researchers would conclude that the new protocol increased counseling time above 4 minutes per patient when in reality it did not.
+
+13. Feedback only, no answer.
