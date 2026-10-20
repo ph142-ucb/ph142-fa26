@@ -1,0 +1,55 @@
+Fall 2025 Midterm 2: Answer Key
+
+1. B. False. If A and B were independent, P(A ∩ B) = 0.72 × 0.55 = 0.396, which is not 0.38.
+
+2. C. Poisson
+
+3. D. The sampling distribution of the sample mean is approximately Normal when n is large.
+
+4. A. pbinom()
+
+5. C. Failing to detect that Febreze exposure truly increases asthma risk
+
+6.1 H0: μ = 96.5 papers per year; HA: μ > 96.5 papers per year (one-sided test)
+
+6.2 z = (100.5 − 96.5) / (8.5 / √25) = 4 / 1.7 = 2.35
+
+6.3 pnorm(2.35, lower.tail = FALSE)
+
+6.4 p ≈ 0.01, which is less than α = 0.05. If the true mean were still 96.5, we would see a sample mean this high or higher only about 1% of the time. We reject H0: there is strong evidence that UC’s average research productivity has increased.
+
+7.1 P(B ∪ W) = 0.65 + 0.75 − 0.55 = 0.85
+
+7.2 P(all 8 feel safe biking) = 0.65^8 = 0.03
+
+7.3 P(at least one does not feel safe biking) = 1 − 0.65^8 = 1 − 0.03 = 0.97
+
+7.4 Students may share experiences or influence one another. For example, they may commute together or talk about safety, so their perceptions aren’t independent.
+
+7.5 P(H | S) = (0.95 × 0.60) / (0.95 × 0.60 + 0.50 × 0.40) = 0.57 / 0.77 = 0.74
+
+8.1
+
+A = 0.85 × 200 = 170
+B = 1800 − 1710 = 90
+C = 200 − 170 = 30
+D = 0.95 × 1800 = 1710
+
+8.2
+
+PPV = A / (A + B) = 170 / 260 = 0.65
+NPV = D / (C + D) = 1710 / 1740 = 0.98
+
+8.3 Sensitivity and specificity stay the same. They are properties of the test and aren’t affected by disease prevalence; PPV and NPV are what change.
+
+9.1 SE = σ / √n = 0.40 / √100 = 0.04
+95% CI = 0.83 ± 1.96 × 0.04 = 0.83 ± 0.08 = (0.75, 0.91) μg/dL
+
+9.2 Reject. The historical mean of 1.0 μg/dL lies outside the 95% CI, which is evidence that mean BLLs have decreased.
+
+9.3 Any one of these: increase the sample size, increase the effect size, or increase the significance level (α).
+
+10. (Extra credit, 0.5 pt each)
+
+Probability of Type II error: increase
+Statistical power: decrease
