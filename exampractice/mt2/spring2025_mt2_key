@@ -1,0 +1,60 @@
+Spring 2026 Midterm 2: Answer Key
+
+Q1. B. False. Independence means P(A|B) = P(A). It does not mean P(A|B) = P(B|A).
+
+Q2. B. 0.57
+P(A ∪ B) = P(A) + P(B) − P(A ∩ B) = 0.30 + 0.45 − 0.18 = 0.57
+
+Q3. C. The statement may be incorrect because when a disease is rare, false positives can outnumber true positives.
+Take n = 10,000. Then 50 are infected, giving about 48 true positives. Among the 9,950 uninfected, about 498 test positive falsely.
+
+Q4. D. Poisson distribution. Cases are rare events counted over a fixed interval at a constant average rate, with no fixed upper bound on the count.
+
+Q5. B. Baby B
+z_A = (3.28 − 3.10) / 0.18 = 1.00
+z_B = (4.02 − 3.75) / 0.24 = 1.13
+Baby B is farther from its population mean in SD units.
+
+Q6.1 B. Mean 95 and standard error 20/√36 = 3.33
+
+Q6.2 C. 0.68
+SE = 20/√36 = 3.33, so 91.7 to 98.3 is 95 ± 1 SE, and P(−1 < Z < 1) = 0.68.
+
+Q6.3 B. By the Central Limit Theorem, the sampling distribution of the mean is approximately normal because n = 36 is large enough, even though the population is skewed.
+
+Q7.1 H0: μ_high = μ_low; HA: μ_high > μ_low
+
+Q7.2 SE = 35/√120 = 3.195
+95% CI = 285 ± 1.96 × 3.195 = (278.74, 291.26) ms
+
+Q7.3 If we repeated this sampling process many times, about 95% of the resulting intervals would contain the true mean reaction time among young adults with high phthalate exposure.
+
+Q7.4 B. False. The test is one-sided: it asks whether high exposure leads to slower reaction time.
+
+Q7.5 A. Reject, because p = 0.003 < 0.05.
+
+Q8.1 P(B and not S) = P(B) − P(S ∩ B) = 0.27 − 0.12 = 0.15
+
+Q8.2 Sunscreen only = 0.65 − 0.12 = 0.53
+Sunburn only = 0.27 − 0.12 = 0.15
+Both = 0.12
+P(neither) = 1 − (0.53 + 0.15 + 0.12) = 0.20
+
+Q8.3 No, they are not independent.
+P(S) × P(B) = 0.65 × 0.27 = 0.18, but P(S ∩ B) = 0.12. Since 0.12 ≠ 0.18, the events are not independent.
+
+Q9.1 H0: p = 0.28; HA: p > 0.28
+
+Q9.2
+a) Expected recoveries = np = 90 × 0.28 = 25.20
+b) SD = √(np(1 − p)) = √(90 × 0.28 × 0.72) = √18.144 = 4.26
+
+Q9.3 z = (54 − 25.20) / 4.26 = 6.76
+
+Q9.4 Any one of these: increase the sample size, reduce measurement variability or improve measurement precision, or increase the significance level.
+
+Q9.5 pnorm(6.76, lower.tail = FALSE)
+
+Q10. (Extra credit) 0.39
+z = (80 − 60) / 15 = 1.33, so P(Z > 1.33) = 0.09
+P(X = 1) = C(10,1) × 0.09 × 0.91^9 = 10 × 0.09 × 0.91^9 = 0.39
