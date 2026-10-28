@@ -1,0 +1,499 @@
+---
+title: "Assignment 6"
+author: "Your name and student ID"
+date: "Today's date"
+output:
+  pdf_document: default
+---
+
+### Instructions 
+* This semester, homework assignments are for practice only and will not be turned in for marks.
+
+```{r setup, include = FALSE}
+# Don't change these lines, just run them!
+source("setup/hw06.RAGS.R")
+
+```
+
+Helpful hints:
+
+- Every function you need to use was taught during lecture! So you may need to 
+revisit the lecture code to help you along by opening the relevant files on Datahub. 
+Alternatively, you may wish to view the code in the condensed PDFs posted 
+on the course website. Good luck!
+
+- Knit your file early and often to minimize knitting errors! If you copy and 
+paste code for the slides, you are bound to get an error that is hard to 
+diagnose. Typing out the code is the way to smooth knitting! We recommend 
+knitting your file each time after you write a few sentences/add a new code 
+chunk, so you can detect the source of knitting errors more easily. This will 
+save you and the GSIs from frustration! **You must knit correctly before submitting.*
+
+
+\newpage
+
+Oklahoma is not historically known for experiencing earthquakes. Up until 
+2008, Oklahoma experienced a constant rate of about 1.5 perceptible earthquakes
+per year on average.
+
+1. [1 point] Assuming that earthquakes are random and independent, with a 
+constant rate of 1.5 per year, the count of perceptible earthquakes per year in 
+Oklahoma should have a Poisson distribution with mean 1.5. What is the standard 
+deviation of the number of earthquakes per year? Round to the nearest 3 decimal places.
+
+```{r calculate-sd}
+sd_earthquake <- "YOUR ANSWER HERE"
+sd_earthquake
+# BEGIN SOLUTION
+sd_earthquake <- round(sqrt(1.5), 3)
+sd_earthquake
+# END SOLUTION
+check_problem1()
+```
+
+\newpage
+
+2. [1 point] Making the same assumptions as in part (a), use one or two R functions to 
+compute the probability of seeing less than two earthquakes per year. Round your answer to three decimal places.
+
+```{r earthquake-prob}
+probability <- "YOUR ANSWER HERE"
+probability
+# BEGIN SOLUTION
+probability <- round(ppois(q = 1, lambda = 1.5), 3)
+probability
+
+#solution for GSIs
+#cumulative probability of seeing 1 or less 
+option_1 <- ppois(q = 1, lambda = 1.5) 
+
+#sum of the probability of seeing exactly 1 and the probability of seeing 0
+option_12 <- dpois(x = 1, lambda = 1.5) + dpois(x = 0, lambda = 1.5)
+# END SOLUTION
+
+check_problem2()
+
+```
+
+\newpage
+
+3. [2 points] Do the same calculation as above, this time using only a hand 
+calculator. Show your work and round your final percentage to two decimal places.
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+$P(X=k) = \frac{e^{-\mu}\mu^k}{k!}$
+
+$P(X=0) = \frac{e^{-\mu}\mu^0}{0!}=e^{-1.5}=0.2231302$
+
+$P(X=1) = \frac{e^{-1.5}1.5^1}{1!}=0.3346952$
+
+Thus: $P(X<2) = P(X=0) + P(X=1) = 0.2231302 + 0.3346952 = 0.5578254 = 55.78\%$
+
+# END SOLUTION
+
+\newpage
+
+4. [1 point] In 2013, Oklahoma experienced 109 perceptible earthquakes (an 
+average of two per week). Assuming the same model as above, write an equation to
+show how the chance of experience 109 earthquakes or more can be written as a 
+function of the probability at or below some $k$. 
+
+(Note: You can write these equations using pen and paper and upload the image if
+you'd like. You can also write the equations using plain text (i.e., P(X >= k)).
+If you would like to use math equations that render when you knit the pdf 
+(i.e., $P(X>=k)$) you need to be **very careful** with your symbols. For example, to get the symbol for "greater than or equal to" you cannot copy and paste it into R from the slides or another document. This will cause errors! Instead you need to
+write $P(X \geq k)$. Again, use any of these three methods (hand-written, plain
+text in R, or "math equations between dollar signs", and you will get points 
+so long as it is human-readable.) 
+
+<Note: If you are uploading an image (this is optional), use the following code, or delete if not using.BE SURE TO REMOVE THE OPTION "eval = F" if using this code OR IT WON'T RUN when you knit the file!:>
+
+```{r, echo=F, out.width="80%", eval=F}
+library(knitr)
+#include_graphics("src/your-scans-name.jpg")
+# Once you replace the above line with your file's name (after uploading the file
+# to datahub's Image sub-directory) you can execute the line of code and 
+# verify that the image is printed below the code chunk.
+```
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+$P(X \geq 109) = 1 - P(X \leq 108)$
+
+# END SOLUTION
+
+\newpage
+
+5. [1 point] Using R, calculate the probability of observing 109 perceptible 
+earthquakes or more. Round your answer to the nearest whole number.
+
+```{r earthquake-109}
+probability_109_or_more <- "YOUR ANSWER HERE"
+probability_109_or_more
+
+# BEGIN SOLUTION
+probability_109_or_more <- 0
+probability_109_or_more
+
+# for GSIs
+#solution a (At or above k=109 is equal 1 - at or below k = 108.):
+option_1 <- 1 - ppois(q = 108, lambda = 1.5, lower.tail = T)
+
+#solution b (Use the upper tail probability at or above 109):
+option_2 <- ppois(q = 109, lambda = 1.5, lower.tail = F)
+
+# END SOLUTION
+check_problem5()
+```
+
+\newpage
+
+6. [1 point] Based on your answer to Problem 5, write a sentence describing the chance of seeing such an event assuming the specified Poisson distribution (i.e., is it rare or common?)
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+The chance of seeing the event is rare because the probability of the above happening is almost 0.
+
+# END SOLUTION
+
+\newpage
+
+7. [2 points] Based on your answer in question (e), would you conclude that the 
+mean number of perceptible earthquakes has increased? Why or why not? Would 
+knowing that the number of perceptible earthquakes was 585 in 2014 support your 
+conclusion?
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+[1 point for correct conclusion. 1 point for explanation] Yes the mean number of perceptible earthquakes has increased. The probability of observing such a high number of earthquakes is essentially 0 when the true mean is 1.5 earthquakes per year. Yes observing 585 earthquakes in 2014 supports my conclusions that the true mean is increasing.
+
+# END SOLUTION
+
+\newpage
+
+To track epidemics, the Center for Disease Control and Prevention requires 
+physicians to report all cases of important transmissible diseases. In 2014,
+a total of 350,062 cases of gonorrhea were officially reported, 53% of which 
+were individuals in their 20s. Assume this 53% stays the same every year.
+Researchers plan to take a simple random sample of 400 diagnosed cases of 
+gonorrhea to study the risk factors associated with the disease. Call $\hat{p}$
+the proportion of cases in the sample corresponding to individuals in their 20s. 
+
+8 [1 point] What is the mean of the sampling distribution of $\hat{p}$ in random samples of size 400?
+
+```{r sampling-dist-mean}
+sampling_dist_mean <- "YOUR ANSWER HERE"
+sampling_dist_mean
+# BEGIN SOLUTION
+sampling_dist_mean <- 0.53
+sampling_dist_mean
+# END SOLUTION
+check_problem8()
+```
+
+# BEGIN SOLUTION
+mean = 0.53, since the sample mean is an unbiased estimator of $p$
+# END SOLUTION
+
+\newpage
+
+9. [1 point] What is the standard deviation of the sampling distribution of $\hat{p}$ in random samples of size 400? Round your answer to 3 decimal places.
+
+```{r sampling-dist-sd}
+sampling_dist_sd <- "YOUR ANSWER HERE"
+sampling_dist_sd
+# BEGIN SOLUTION
+sampling_dist_sd <- 0.025
+sampling_dist_sd
+# END SOLUTION
+check_problem9()
+```
+
+# BEGIN SOLUTION
+
+standard deviation = sqrt(p(1-p)/n) = sqrt(0.53(1-0.53)/n) = 0.02495496
+
+The standard deviation is approximately 0.025 when the sample is size 400.
+
+# END SOLUTION
+
+\newpage
+
+10. [3 points] Describe the conditions required for the sampling distribution of $\hat{p}$ to be Normally distributed. Use the numbers provided in the question to check if the conditions are likely met. 
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+- The population is expected to be at least 20 times larger than the sample. 
+Using the 2014 data, the population of >350k cases is much much larger that a 
+sample of size 400
+- $400\times 0.53 = 212$, and $400 \times (1-0.53) = 188$ are both greater than 10, implying that n is large enough and p is not too rare or too common.
+- Yes the conditions are met for the distribution of $\hat{p}$ to be Normally
+distributed.
+
+# END SOLUTION
+
+\newpage
+
+Read [this short article](https://www.nytimes.com/2016/10/06/upshot/when-you-hear-the-margin-of-error-is-plus-or-minus-3-percent-think-7-instead.html)
+in the New York Times Upshot from 2016. (All Berkeley students should have access to a free NY Times subscription.)
+
+11. [2 points] Explain sampling variation, in the context of this article. Does the 3 percentage point margin of error account for sampling variation?
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+Sampling error occurs here because the survey of voters is based on a sample of
+the total voting population. 
+
+Yes, the margin of error accounts for sampling variation.
+
+# END SOLUTION
+
+\newpage
+
+12. [1 point] The authors provides several reasons why the true margin of error is larger than three percent. Describe one of the primary reasons provided in 1-2 sentences.
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+Any of:
+
+- "Frame error": mismatch between people who were polled vs. true target population.
+- Nonresponse error: likelihood of responding is systematically related to how 
+one would have answered the survey.
+- "Analysis error": pollsters are performing the analysis wrong.
+
+Note: students may not use these exact terms, but we're looking for them to describe
+one of these three errors. 
+
+# END SOLUTION
+
+\newpage
+
+13. [1 point] Based on the information in article, if we're doing a study in public health, choose the answer that is most correct:
+
+    (a) The confidence interval accounts for random error only. If a study suffers
+    from other sources of bias (i.e., confounding, or mismeasurement) the CI will
+    not account for this limitation.
+    (b) Increasing the sample size will reduce the chance of other sources of bias
+    (i.e., confounding, or mismeasurement), which is why a larger sample is better.
+    (c) both (a) and (b)
+    d) neither (a) or (b)
+
+Assign your letter choice as a string. Example: nytimes_answer <- "c"
+```{r nytimes-answer}
+nytimes_answer <- "REPLACE WITH a, b, c, or d. Keep the quotes"
+nytimes_answer
+# BEGIN SOLUTION
+nytimes_answer <- "a"
+nytimes_answer
+# END SOLUTION
+check_problem13()
+```
+
+# BEGIN SOLUTION
+Note: (b) is incorrect because increasing sample size does 
+nothing to remove systematic biases like confounding or mismeasurement. 
+# END SOLUTION
+
+\newpage
+
+**Note: This next section is from the lecture taught on October 14th. The notes should be available soon (if they aren't already)**
+
+Deer mice are small rodents native in North America. Their adult body lengths (excluding tail) are known to vary approximately Normally, with mean $\mu=86$ mm and standard deviation $\sigma=8$ mm. It is suspected that depending on their  environment, deer mice may adapt and deviate from these usual lengths. A random  sample of $n=14$ deer mice in a rich forest habitat gives an average body length  of $\bar{x}=91.1$ mm. Assume that the standard deviation $\sigma$ of all deer mice in this area is 8 mm. 
+
+14. [1 point] Calculate a 99% confidence interval based on this information (you can use R as a calculator to perform the calculation, or use a hand calculator). Round your final values to three decimal places.
+
+```{r CI99-rodents}
+lower_tail <- "REPLACE WITH YOUR ANSWER FOR THE LOWER BOUND"
+upper_tail <- "REPLACE WITH YOUR ANSWER FOR THE UPPER BOUND"
+ci_99 <- c(lower_tail, upper_tail)
+
+# BEGIN SOLUTION
+ci_99 <- c(85.592, 96.608)
+ci_99
+
+# for the GSIs
+known.sigma <- 8
+critical.value <- 2.576
+lower_sol <- 91.1 - critical.value*(8/sqrt(14)) #lower bound
+upper_sol <- 91.1 + critical.value*(8/sqrt(14)) #upper bound
+
+# END SOLUTION
+check_problem14()
+```
+
+\newpage
+
+15. [1 point] Interpret the confidence interval from Problem 14.
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+Our 99% CI for this population of deer mice lengths is 85.59mm to 96.61mm. This means that if we were to take 100 samples using this same method, 99 of them would contain the true value $\mu$ in the underlying population and 1 would not. 
+
+# END SOLUTION
+
+\newpage
+
+16. [2 points] Suppose deer mice researchers thought your CI was too wide to be 
+useful. Given that you cannot change the standard deviation, what two things 
+could you do to provide a narrower confidence interval? 
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+- Reduce the level of confidence from 99% to 95% or to 90% even.
+- Increase the sample size
+
+# END SOLUTION
+
+\newpage
+
+17. [1 point] You decide to create a 95% confidence interval, rather than a 99% 
+confidence interval. Perform this calculation below and round your answer to 3 decimal places.
+
+```{r CI95-rodents}
+lower_tail95 <- "REPLACE WITH YOUR ANSWER FOR THE LOWER BOUND"
+upper_tail95 <- "REPLACE WITH YOUR ANSWER FOR THE UPPER BOUND"
+ci_95 <- c(lower_tail95, upper_tail95)
+
+# BEGIN SOLUTION
+ci_95 <- c(86.909, 95.291)
+ci_95
+
+# for the GSIs
+known.sigma <- 8
+critical.value <- 1.96
+lower_sol <- 91.1 - critical.value*(8/sqrt(14)) #lower bound
+upper_sol <- 91.1 + critical.value*(8/sqrt(14)) #upper bound
+
+# END SOLUTION
+check_problem17()
+```
+
+\newpage
+
+18. [2 points]  Based on this 95% CI, is there evidence against the hypothesis 
+$H_0$ that these mice have a significantly different mean length compared to the 
+population described in the first part of the question? 
+Without performing a calculation, what amounts do you know the p-value to be 
+bounded between for a two-sided hypothesis test of $H_0$? 
+
+Hint: 
+Use information from question 17 and from question 14.
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+The 95% confidence interval is from 86.91mm to 95.29mm. Thus, there is evidence
+against $H_0: \mu = 86$, because 86mm is not contained within this 95% confidence
+level. We know that the p-value is greater then 0.01 but less than 0.05 because 
+86mm is outside of the 95% confidence interval but inside the 99% confidence 
+interval.
+
+# END SOLUTION
+
+We want to perform a z-test with the two-sided alternative hypothesis the true mean length is not equal to 86mm. In the next four problems, we will conduct a z-test step by step.
+
+\newpage
+
+19. [1 point] Write out the null and alternative hypotheses for the above problem using notation.
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+Null: $H_0: \mu = 86$. 
+Alternative: $H_a: \mu \neq 86$
+
+# END SOLUTION
+
+\newpage
+
+20. [1 point] Calculate the z test statistic. Round your answer to 3 decimal places.
+
+```{r calc-z-stat}
+z_stat <- "REPLACE WITH YOUR ANSWER FOR THE LOWER BOUND"
+z_stat
+
+# BEGIN SOLUTION
+z_stat <- round((91.1-86)/(8/sqrt(14)), 3)
+z_stat
+
+# END SOLUTION
+check_problem20()
+```
+
+# BEGIN SOLUTION
+
+$z = \frac{\bar{x}-\mu}{\sigma/\sqrt{n}} = \frac{91.1-86}{8/\sqrt{14}} = 2.385307$
+
+# END SOLUTION
+
+\newpage
+
+21. [1 point] Calculate the p-value as a decimal. Round your answer to 3 decimal places.
+
+```{r calc-p-val}
+p_val <- "REPLACE WITH YOUR ANSWER FOR THE LOWER BOUND"
+p_val
+
+# BEGIN SOLUTION
+p_val <- round(2*pnorm(2.385, mean = 0, sd = 1, lower.tail = F),3)
+p_val
+
+# END SOLUTION
+check_problem21()
+```
+
+# BEGIN SOLUTION
+
+p-value = 0.017 = 1.7%
+
+# END SOLUTION
+
+\newpage
+
+22. [1 point] Interpret your above p-value.
+
+[TODO: YOUR ANSWER HERE]
+
+# BEGIN SOLUTION
+
+Thus, there is a 1.7% chance of seeing a result this or more extreme under the
+null hypothesis of no difference in the means.
+
+# END SOLUTION
+
+
+
+
+\newpage
+
+### Check your score
+
+Click on the middle icon on the top right of this code chunk (with the downwards gray arrow and green bar) to run all your code in order. Then, run this chunk to check your score.
+```{r check-total-score}
+# Just run this chunk.
+total_score()
+```
+
+
+
