@@ -1,0 +1,213 @@
+---
+title: "Lab 09: Proportions and Inference"
+author: "name and student ID"
+date: "Today's date"
+output: pdf_document
+---
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(tibble)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(testthat)
+```
+
+* Due date: Saturday, November 7th at 11:59am PST with 2 hour grace period.
+* Late penalty: 50% late penalty if submitted within 24 hours of due date, no 
+marks for assignments submitted thereafter.
+* This assignment is graded on **correct completion**, all or nothing. You must pass all public tests and submit the assignment for credit.
+* Submission process: Follow the submission instructions on the final page. Make sure you do not remove any `\newpage` tags or rename this file, as this will break the submission.
+
+Helpful hints:
+
+- Every function you need to use was taught during lecture! So you may need to 
+revisit the lecture code to help you along by opening the relevant files on Datahub. 
+Alternatively, you may wish to view the code in the condensed PDFs posted 
+on the course website. Good luck!
+
+- Knit your file early and often to minimize knitting errors! If you copy and 
+paste code for the slides, you are bound to get an error that is hard to 
+diagnose. Typing out the code is the way to smooth knitting! We recommend 
+knitting your file each time after you write a few sentences/add a new code 
+chunk, so you can detect the source of knitting errors more easily. This will 
+save you and the GSIs from frustration! **You must knit correctly before submitting.**
+
+- If your code runs off the page of the knitted PDF then you will LOSE POINTS! To avoid this, have a look at your knitted PDF and ensure all the code fits in the file (you can easily view it on Gradescope via the provided link after submitting). If it doesn't look right, go back to your .Rmd file and add spaces (new lines) using the return or enter key so that the code runs onto the next line.
+
+\newpage
+
+### Tests of changes in sex ratios based on a single sample
+
+There is a long literature studying changes in sex-ratios of births due to 
+stressful events, such as 9/11. In today's lab, we consider a relatively small 
+study that recorded biomarkers of stress on pregnancy. In the group of subjects
+that had the highest markers of stress (based on cortisol), there were 14 births
+to males out of a total of 38.
+
+In this lab, we will compare the four methods we learned to calculate CIs for
+proportions. Recall that two of these methods involved hand calculations (though
+we can treat R as if it were a calculator) and two of the methods used built-in
+R functions.
+
+**1. [1 point] Use the Normal approximation to construct a 95% confidence interval in this high stress group. We also called this specific method of constructing the CI the "large sample method". Assign the object `large_sample_ci` to a vector of the lower bound and upper bound rounded to 4 decimal places.**
+
+```{r large-sample-method}
+large_sample_ci <- NULL # YOUR CODE HERE
+large_sample_ci
+
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p1.R")
+```
+
+**2. [1 point] Create the 95% CI again, this time using the R function that implements the Wilson Score method with a continuity correction. Round your answer to 4 decimal places.**
+
+```{r Wilson-score-method}
+wilson_score_ci <- NULL # YOUR CODE HERE
+wilson_score_ci
+
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p2.R")
+```
+
+**3. [1 point] Create the 95% CI again, this time using the Plus 4 method. Round your answer to 4 decimal places.**
+
+```{r plus-4-method}
+plus_4_ci <- NULL # YOUR CODE HERE
+plus_4_ci
+
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p3.R")
+```
+
+**4. [1 point] Create the 95% CI again, this time using the R function that implements the Clopper Pearson (Exact) method. Round your answer to 4 decimal places.**
+
+```{r Clopper-Pearson-method}
+exact_method_ci <- NULL # YOUR CODE HERE
+exact_method_ci
+
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p4.R")
+```
+
+**5. Summarize the estimates from the four methods in the following table. Do they include the null hypothesized value for the sex ratio?**
+
+| Method        | 95% Confidence Interval | 
+|---------------|:-----------------------:|
+| Large sample  | AA.AA% to AA.AA%          |
+| Wilson Score* | AA.AA% to AA.AA%          | 
+| Plus four     | AA.AA% to AA.AA%          | 
+| Exact         | AA.AA% to AA.AA%          | 
+
+* with continuity correction.
+
+_Type your answer here, replacing this text._
+
+**6. [1 point] Here is a code template to help you to graphically present these estimates. Graphical presentations of estimates and their CIs is very useful for assessing whether the CIs overlap the null hypothesized value and tends to be better than presenting tables of estimates to readers of your research. Fill in the code below with your estimates for each confidence interval method, assign `p6` to the plot of the confidence intervals, then answer the question below.**
+
+```{r}
+# First make a tibble (an easy way to make a data frame) with the data about
+# each confidence interval. To do this, replace each instance of 0.00 with the
+# estimate from your calculations above.
+sex_CIs <- tibble(method   = c("large sample", "Exact", "Wilson", "Plus 4"),
+                  lower_CI = c(0.0           , 0.0    ,  0.0    ,  0.0),
+                  upper_CI = c(0.0           , 0.0    ,  0.0    ,  0.0),
+                  estimate = c(0.0           , 0.0    ,  0.0    ,  0.0)
+                  )
+# Build the ggplot incrementally, to understand how it works.
+# Step 1: (why do we put a horizontal line at 50?)
+ggplot(data = sex_CIs, aes(x = method, y = estimate)) + 
+  geom_point() + 
+  geom_hline(aes(yintercept = 50), lty = 2)
+
+
+# Step 2:
+ggplot(data = sex_CIs, aes(x = method, y = estimate)) + 
+  geom_point() +
+  geom_hline(aes(yintercept = 50), lty = 2) +
+  geom_segment(aes(x = method, xend = method, y = lower_CI, yend = upper_CI)) +
+  labs(y = "Estimate with 95% CI")
+
+
+p6 <- NULL # YOUR CODE HERE
+p6
+
+
+# YOUR CODE HERE
+
+```
+
+What does `geom_segment()` do? In particular, what do `x`, `xend`, `y` and `yend` specify in this case?
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p6.R")
+```
+
+**7. Based on this plot, what can you say about the confidence intervals for the sex ratio in the high stress group?**
+
+_Type your answer here, replacing this text._
+
+**8. Repeat the above analysis for the group with low stress. There were 25 births in this group, of which 17 of them were males.**
+
+```{r}
+# YOUR CODE HERE
+
+# YOUR CODE HERE
+```
+
+**9. What can you say about the confidence intervals for the sex ratio in the low stress group?**
+
+_Type your answer here, replacing this text._
+
+\newpage
+
+### Submission
+
+For assignments in this class, you'll be submitting using the **Terminal** tab in the pane below. In order for the submission to work properly, make sure that:
+
+1. Any image files you add that are needed to knit the file are in the `src` folder and file paths are specified accordingly. 
+2. You **have not changed the file name** of the assignment.
+3. The file is saved (the file name in the tab should be **black**, not red with an asterisk).
+4. The file knits properly.
+
+Once you have checked these items, you can proceed to submit your assignment.
+
+1. Click on the **Terminal** tab in the pane below.
+2. Copy-paste the following line of code into the terminal and press enter.
+
+cd; cd ph142-fa26/lab/lab09; python3.11 turn_in.py
+
+3. Follow the prompts to enter your Gradescope username and password. When entering your password, you won't see anything come up on the screen--don't worry! This is just for security purposes--just keep typing and hit enter.
+4. If the submission is successful, you should see "Submission successful!" appear as output.
+5. If the submission fails, try to diagnose the issue using the error messages--if you have problems, post on Piazza. 
+
+The late policy will be strictly enforced, **no matter the reason**, including submission issues, so be sure to submit early enough to have time to diagnose issues if problems arise.
+
