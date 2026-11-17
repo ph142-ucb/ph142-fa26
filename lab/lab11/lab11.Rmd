@@ -1,0 +1,297 @@
+---
+title: 'Lab 11: Checking assumptions for linear regression'
+author: "Name and Student ID"
+date: "Today's Date"
+output: pdf_document
+---
+
+```{r}
+library(testthat)
+library(broom)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(patchwork)
+```
+
+### Instructions 
+* Due date: Saturday, November 21st, at 11:59am PST with 2 hour grace period.
+* Late penalty: 50% late penalty if submitted within 24 hours of due date, no marks for assignments submitted thereafter.
+* This assignment is graded on **correct completion**, all or nothing. You must pass all public tests and submit the assignment for credit.
+* Submission process: Follow the submission instructions on the final page. Make sure you do not remove any `\newpage` tags or rename this file, as this will break the submission.
+
+Helpful hints:
+
+- Every function you need to use was taught during lecture! So you may need to 
+revisit the lecture code to help you along by opening the relevant files on Datahub. Alternatively, you may wish to view the code in the condensed PDFs posted on the course website. Good luck!
+
+- Knit your file early and often to minimize knitting errors! If you copy and 
+paste code for the slides, you are bound to get an error that is hard to 
+diagnose. Typing out the code is the way to smooth knitting! We recommend 
+knitting your file each time after you write a few sentences/add a new code 
+chunk, so you can detect the source of knitting errors more easily. This will 
+save you and the GSIs from frustration! You must knit correctly before submitting.*
+
+- If your code runs off the page of the knitted PDF then you will LOSE POINTS! To
+avoid this, have a look at your knitted PDF and ensure all the code fits in the 
+file (you can easily view it on Gradescope via the provided link after submitting). If it doesn't look right, go back to your .Rmd file and add spaces (new lines) using the return or enter key so that the code runs onto the next line.
+
+### Boston Data on Median Household Value and Distance to Employment Centers
+
+We are examining a data set used to predict housing prices in the area around Boston (Harrison, D. and Rubinfeld, 1978). We wish to specifically examine the association between the measure of housing price, `medv` (median value of owner-occupied homes in the $1000s), and the measure of nitrogen oxide concentration, `nox`. The `Boston` dataframe is contained in the `MASS` package, which we will load below.
+
+```{r message=FALSE}
+### NOTE: All of the code is to get you started on the lab. You do not need to understand any functions that you have not seen before.
+
+### USE ED TO LOOK THROUGH FAQ & ASK FOR HELP!
+
+# Load the MASS library with the Boston data
+library(MASS)
+
+# Load the data
+boston_housing <- read.csv("data/Boston.csv")
+
+# List variables
+boston2 <- boston_housing %>% dplyr::select(nox, dis, medv)
+
+help(Boston) # Take a quick look at the variables in the dataframe
+detach(package:MASS) ### Detach this library because it has functions that overlap with `dplyr` functions
+library(dplyr)
+
+### Normally when we are doing inference, we take a random sample to make an inference about the population. 
+### If you have time after the lab, take a random sample of 50 rows from the data and perform the analysis below to see how your results change.
+```
+
+\newpage
+
+**1. [1 point] Perform a linear regression of `medv` versus `nox` using the `boston2` data and and tidy the results. Assign `p1` to the slope from the linear model. Be careful about which variable is explanatory and which is response!**
+
+```{r}
+p1 <- NULL # YOUR CODE HERE
+p1
+
+# YOUR CODE HERE
+```
+
+```{r}
+. = ottr::check("tests/p1.R")
+```
+
+**2. Interpret the slope parameter for the relationship between `medv` and `nox`. Notice the other columns in the `tidy()` output: `std.error`, `statistic`, and `p-value`. These can be used to test the null hypothesis that the slope parameter is equal to 0. Given this information, would you reject or fail to reject the null hypothesis?**
+
+_Type your answer here, replacing this text._
+
+**3. [1 point] Use `glance()` to look at the r-squared value for this model and assign this value to `p3`. Does `nox` explain a lot of the variation in median household value? Would you expect it to?**
+
+```{r}
+p3 <- NULL # YOUR CODE HERE
+p3
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p3.R")
+```
+
+**4. Create the plots shown during lecture to check the assumptions required for using simple linear models. You will first need to fit the linear model and then use the `augment()` function from the `broom` package to store the residuals and fitted values into a new data frame.**
+
+The hardest plot to make is likely the box plot because the data first needs to 
+be reshaped. You can reshape the data with the `gather()` function that you see in the slides. Here is a helpful explanation for how `gather()` works: https://twitter.com/WeAreRLadies/status/1059520693857996800.
+
+Basically, we need to gather the observed y values and the residuals by stacking
+them into one variable so that we can make two box plots side-by-side. We include the `gather()` code below since it is a bit tricky. You need to use the resulting dataframe to make your box plots.
+
+```{r}
+
+# first plot
+plot1 <- NULL # YOUR CODE HERE
+plot1
+
+# second plot
+plot2 <- NULL # YOUR CODE HERE
+plot2
+
+# third plot
+plot3 <- NULL # YOUR CODE HERE
+plot3
+
+# fourth plot (gather code included for you. It assumes your augmented data is called `augmented_1`, so you will likely need to update that to whatever your augmented data is called).
+
+# reshape <- augmented_1 %>% dplyr::select(.resid, medv) %>%
+# gather(key = 'type', value = 'value', medv, .resid)
+
+plot4 <- NULL # YOUR CODE HERE
+plot4
+
+# YOUR CODE HERE
+```
+
+**5. The plots appear to be a bit messier than the ones shown in class, but these reflect what we often see "in the real world". Do we satisfy the assumptions to conduct a linear regression?**
+
+_Type your answer here, replacing this text._
+
+### Lab Conclusion (make sure to read this and understand it)
+
+From this exercise, we can conclude that there is a negative association between nitrogen oxides and median household value. An increase of 1 part per 10 million (PPM) of nitrogen oxide is associated with a decrease in median household value of 33,900 dollars. Note that this "increase of 1 unit" is wider than what we see in the range of the scatterplot, so we should modify our interpretation to reflect a 0.1 unit increase in `nox`. In other words, an increase 0.1 PPM of nitrogen oxide is associated with a decrease in median household value of 3,390 dollars.
+
+\newpage
+
+**6. [1 point] Use the `boston2` data to perform a linear regression of `medv` (median value of owner-occupied homes in $1000s) versus `dis` (weighted mean of distances to five Boston employment centers) and tidy the results. Assign the *linear model* to `p6`.** 
+
+```{r}
+p6 <- NULL # YOUR CODE HERE
+p6
+
+# YOUR CODE HERE
+```
+
+```{r}
+. = ottr::check("tests/p6.R")
+```
+
+\newpage
+
+**7. Interpret the slope parameter and the p-value from the table. What null and alternative hypotheses does this p-value refer to?** 
+
+_Type your answer here, replacing this text._
+
+\newpage
+
+**8. [1 point] Derive a 95% CI for this slope parameter and assign the lower and upper bounds to `p8`. Round your bounds to 4 decimal places. In your opinion, would you expect the direction of this relationship to hold if the data were collected today?**
+
+```{r}
+p8 <- NULL # YOUR CODE HERE
+p8
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p8.R")
+```
+
+\newpage
+
+**9. [1 point] Use a function to look at the r-squared value for this model. Assign this value to `p9` and round to two decimal places. Does `dis` explain a lot of the variance in median household value? Would you expect it to?**
+
+```{r}
+p9 <- NULL # YOUR CODE HERE
+p9
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+```{r}
+. = ottr::check("tests/p9.R")
+```
+
+\newpage
+
+**10. [2 points] Make a plot with the raw data points, use `geom_smooth()` to add the line of best fit from the simple linear regression model (containing `medv` and `dis`), and use `geom_abline()` to add a horizontal line with a slope of 0 that crosses the y-axis at the average value of `medv` to vertically bisect the data points. Store your plot as the object `p10`.**
+
+```{r}
+p10 <- NULL # YOUR CODE HERE
+p10
+
+# YOUR CODE HERE
+```
+
+```{r}
+. = ottr::check("tests/p10.R")
+```
+
+\newpage
+
+**11. Create plots to check the assumptions required for using simple linear models. You will first need to fit the linear model and then use the `augment()` function from the `broom` package to store the residuals and fitted values into a new data frame.** 
+
+```{r}
+
+# first plot
+plot1 <- NULL # YOUR CODE HERE
+plot1
+
+# second plot
+plot2 <- NULL # YOUR CODE HERE
+plot2
+
+# third plot
+plot3 <- NULL # YOUR CODE HERE
+plot3
+
+plot4 <- NULL # YOUR CODE HERE
+plot4
+
+# YOUR CODE HERE
+```
+
+_Type your answer here, replacing this text._
+
+Regardless of your answer, we will continue using the model to make inferences about the relationship between `med` and `dis`.
+
+\newpage
+
+### Pointwise Confidence Intervals and Multiple Testing
+
+As you learned in lecture, there are two types of confidence intervals applicable to estimating a point on the plot which are related to whether one is predicting the population average among individuals with $X=x$ (**mean response**) or whether one is predicting the actual $Y$ for a particular individual (**single observation**). For this assignment, we will concentrate on the confidence interval for the mean response. We do so because it is rare to use statistical models in public health as forecasting models (predicting an individual's health in the future) and is more common to use them to estimate population-level changes (how the mean of a health variable changes in a population as we change exposure). However, as precision medicine becomes more of a reality and models more accurately predict health (i.e., have high $R^2$'s), then statistical forecasting may become more common in our field.
+
+**12. [1 point] Calculate four 95% confidence intervals for the mean response, one at each `dis` value: 2.5, 5.0, 7.5, and 10.0 miles. Create a vector of the lower bounds for each confidence interval rounded to two decimal places and assign it to `p12`.**
+
+**Hint: Use the `predict()` function and be sure to specify interval = "confidence"**
+
+OPTIONAL: If time allows, add the four CIs to a scatter plot of the data (along with the line of best fit).
+
+```{r}
+ci_dataframe <- data.frame(dis = c(2.5, 5.0, 7.5, 10))
+p12 <- NULL # YOUR CODE HERE
+p12
+
+# YOUR CODE HERE
+```
+
+```{r}
+. = ottr::check("tests/p12.R")
+```
+
+\newpage
+
+**13. Interpret the point wise 95% confidence interval of the median house price when the distance = 10.** 
+
+
+_Type your answer here, replacing this text._
+
+\newpage
+
+**14. Do the CI's differ in length for different values of `dis`? Why or why not?**
+
+_Type your answer here, replacing this text._
+
+\newpage
+
+### Submission
+
+For assignments in this class, you'll be submitting using the **Terminal** tab in the pane below. In order for the submission to work properly, make sure that:
+
+1. Any image files you add that are needed to knit the file are in the `src` folder and file paths are specified accordingly. 
+2. You **have not changed the file name** of the assignment.
+3. The file is saved (the file name in the tab should be **black**, not red with an asterisk).
+4. The file knits properly.
+
+Once you have checked these items, you can proceed to submit your assignment.
+
+1. Click on the **Terminal** tab in the pane below.
+2. Copy-paste the following line of code into the terminal and press enter.
+
+cd; cd ph142-fa26/lab/lab11; python3 turn_in.py
+
+3. Follow the prompts to enter your Gradescope username and password. When entering your password, you won't see anything come up on the screen--don't worry! This is just for security purposes--just keep typing and hit enter.
+4. If the submission is successful, you should see "Submission successful!" appear as output.
+5. If the submission fails, try to diagnose the issue using the error messages--if you have problems, post on Piazza. 
+
+The late policy will be strictly enforced, **no matter the reason**, including submission issues, so be sure to submit early enough to have time to diagnose issues if problems arise.
